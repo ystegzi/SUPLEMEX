@@ -1,0 +1,685 @@
+/* ========================================
+   1. CONFIGURACIÓN GENERAL
+======================================== */
+
+:root {
+    --verde: #b6ff3b;
+    --fondo: #090b09;
+    --negro: #000000;
+    --tarjeta: #141714;
+    --blanco: #ffffff;
+    --gris: #c5c5c5;
+    --borde: #292f27;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 30px;
+}
+
+body {
+    background-image: url(portada-imagen);
+    margin: 0;
+    padding: 0;
+    background-color: var(--fondo);
+    color: var(--blanco);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+/* ========================================
+   2. ENCABEZADO
+======================================== */
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+
+    background-color: var(--negro);
+    color: var(--blanco);
+
+    width: 90%;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 15px 25px;
+
+    border: 1px solid #202420;
+    border-radius: 10px;
+}
+
+/* LOGO */
+
+.logo {
+    color: var(--blanco);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.logo:visited {
+    color: var(--blanco);
+}
+
+.logo span {
+    color: var(--verde);
+}
+
+
+/* ========================================
+   3. MENÚ DE NAVEGACIÓN
+======================================== */
+
+.menu {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.menu a {
+    color: var(--blanco);
+    font-size: 15px;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: var(--verde);
+}
+
+
+/* ========================================
+   4. PORTADA PRINCIPAL
+======================================== */
+
+.portada {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+
+    width: 90%;
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 40px 0;
+}
+
+/* CONTENIDO DE LA PORTADA */
+
+.portada-contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.subtitulo {
+    color: var(--verde);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.portada h1 {
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.1;
+    font-weight: 900;
+    margin: 20px 0;
+}
+
+.portada h1 span {
+    display: block;
+    color: var(--verde);
+}
+
+.descripcion {
+    color: var(--gris);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 480px;
+}
+
+
+/* ========================================
+   5. BOTONES DE LA PORTADA
+======================================== */
+
+.portada-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.boton {
+    display: inline-block;
+    padding: 14px 22px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* BOTÓN PRINCIPAL */
+
+.boton-principal {
+    background-color: var(--verde);
+    color: var(--fondo);
+}
+
+.boton-principal:hover {
+    background-color: var(--blanco);
+    color: var(--fondo);
+    transform: translateY(-3px);
+}
+
+/* BOTÓN SECUNDARIO */
+
+.boton-secundario {
+    border: 1px solid var(--verde);
+    color: var(--verde);
+}
+
+.boton-secundario:hover {
+    background-color: var(--verde);
+    color: var(--fondo);
+    transform: translateY(-3px);
+}
+
+
+/* ========================================
+   6. IMAGEN DE LA PORTADA
+======================================== */
+
+.portada-imagen {
+    flex: 1;
+    min-width: 0;
+}
+
+.portada-imagen img {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid var(--borde);
+}
+
+
+/* ========================================
+   7. SECCIÓN DE PRODUCTOS
+======================================== */
+
+.productos {
+    width: 90%;
+    max-width: 1100px;
+    margin: 90px auto;
+}
+
+/* ENCABEZADO DE PRODUCTOS */
+
+.seccion-encabezado {
+    margin-bottom: 35px;
+}
+
+.seccion-encabezado h2 {
+    color: var(--blanco);
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.2;
+    margin: 10px 0;
+}
+
+.seccion-encabezado h2 span {
+    color: var(--verde);
+}
+
+.seccion-encabezado > p:last-child {
+    color: var(--gris);
+    margin-top: 12px;
+}
+
+
+/* ========================================
+   8. CUADRÍCULA DE PRODUCTOS
+======================================== */
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    align-items: stretch;
+}
+
+
+/* ========================================
+   9. TARJETAS DE PRODUCTOS
+======================================== */
+
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--tarjeta);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-5px);
+    border-color: var(--verde);
+    box-shadow: 0 10px 30px rgba(182, 255, 59, 0.06);
+}
+
+
+/* IMÁGENES DE PRODUCTOS */
+
+.producto-imagen {
+    width: 100%;
+    height: 230px;
+    background-color: #101210;
+    overflow: hidden;
+}
+
+.producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.tarjeta:hover .producto-imagen img {
+    transform: scale(1.05);
+}
+
+
+/* INFORMACIÓN DE PRODUCTOS */
+
+.producto-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 22px;
+}
+
+.producto-categoria {
+    color: var(--verde);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin: 0 0 8px;
+}
+
+.tarjeta h3 {
+    color: var(--blanco);
+    font-size: 21px;
+    margin: 0 0 10px;
+}
+
+.producto-descripcion {
+    color: var(--gris);
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0 0 20px;
+}
+
+
+/* PRECIO Y BOTÓN DE CONSULTA */
+
+.producto-pie {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--borde);
+}
+
+.precio {
+    color: var(--verde);
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.boton-comprar {
+    display: inline-block;
+    background-color: var(--verde);
+    color: var(--fondo);
+    padding: 9px 15px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    transition:
+        background-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.boton-comprar:hover {
+    background-color: var(--blanco);
+    transform: translateY(-2px);
+}
+
+
+/* ========================================
+   10. SECCIÓN NOSOTROS
+======================================== */
+
+.nosotros {
+    width: 90%;
+    max-width: 1100px;
+    margin: 100px auto;
+    padding: 55px 45px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #151a12,
+            #0d100d
+        );
+
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+}
+
+.nosotros-contenido {
+    max-width: 750px;
+}
+
+.nosotros h2 {
+    color: var(--blanco);
+    font-size: clamp(28px, 4vw, 40px);
+    line-height: 1.2;
+    margin: 15px 0 20px;
+}
+
+.nosotros h2 span {
+    color: var(--verde);
+}
+
+.nosotros-contenido > p:not(.subtitulo) {
+    color: var(--gris);
+    font-size: 16px;
+    line-height: 1.9;
+    margin-bottom: 28px;
+}
+
+
+/* ========================================
+   11. SECCIÓN CONTACTO
+======================================== */
+
+.contacto {
+    width: 90%;
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 50px 25px;
+
+    text-align: center;
+    background-color: #111411;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+}
+
+.contacto h2 {
+    color: var(--blanco);
+    font-size: clamp(25px, 4vw, 36px);
+    line-height: 1.2;
+    margin: 15px 0;
+}
+
+.contacto h2 span {
+    color: var(--verde);
+}
+
+.contacto > p:not(.subtitulo) {
+    color: var(--gris);
+    font-size: 15px;
+    max-width: 550px;
+    margin: 0 auto 28px;
+}
+
+.contacto .boton {
+    margin-top: 5px;
+}
+
+
+/* ========================================
+   12. PIE DE PÁGINA
+======================================== */
+
+.pie-pagina {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    width: 90%;
+    max-width: 1100px;
+    margin: 60px auto 0;
+    padding: 25px 0;
+
+    border-top: 1px solid var(--borde);
+}
+
+.pie-pagina .logo {
+    font-size: 23px;
+}
+
+.pie-pagina p {
+    color: var(--gris);
+    font-size: 12px;
+    margin: 0;
+    text-align: center;
+}
+
+.volver-arriba {
+    color: var(--verde);
+    font-size: 13px;
+    transition: color 0.3s ease;
+}
+
+.volver-arriba:hover {
+    color: var(--blanco);
+}
+
+
+/* ========================================
+   13. TABLETAS
+======================================== */
+
+@media (max-width: 900px) {
+
+    .encabezado {
+        width: 92%;
+        padding: 15px 20px;
+    }
+
+    .menu {
+        gap: 15px;
+    }
+
+    .portada {
+        gap: 25px;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .producto-imagen {
+        height: 220px;
+    }
+
+}
+
+
+/* ========================================
+   14. CELULARES
+======================================== */
+
+@media (max-width: 600px) {
+
+    /* ENCABEZADO */
+
+    .encabezado {
+        flex-direction: column;
+        gap: 15px;
+        width: 92%;
+        margin: 12px auto;
+        padding: 18px 12px;
+    }
+
+    .logo {
+        font-size: 25px;
+    }
+
+    .menu {
+        justify-content: center;
+        gap: 12px 18px;
+    }
+
+    .menu a {
+        font-size: 13px;
+    }
+
+
+    /* PORTADA */
+
+    .portada {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 30px;
+
+        width: 90%;
+        margin: 30px auto 60px;
+        padding: 15px 0;
+    }
+
+    .portada h1 {
+        font-size: clamp(31px, 9vw, 40px);
+    }
+
+    .descripcion {
+        font-size: 15px;
+    }
+
+    .portada-botones {
+        gap: 10px;
+        margin-top: 24px;
+    }
+
+    .boton {
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+
+    .portada-imagen img {
+        max-height: 350px;
+    }
+
+
+    /* PRODUCTOS */
+
+    .productos {
+        width: 90%;
+        margin: 65px auto;
+    }
+
+    .productos-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    .producto-imagen {
+        height: 250px;
+    }
+
+    .producto-info {
+        padding: 20px;
+    }
+
+
+    /* NOSOTROS */
+
+    .nosotros {
+        width: 90%;
+        margin: 65px auto;
+        padding: 30px 22px;
+    }
+
+
+    /* CONTACTO */
+
+    .contacto {
+        width: 90%;
+        margin: 65px auto;
+        padding: 35px 20px;
+    }
+
+
+    /* PIE DE PÁGINA */
+
+    .pie-pagina {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 25px 0;
+        margin-top: 50px;
+    }
+
+}
+
+
+/* ========================================
+   15. ACCESIBILIDAD
+======================================== */
+
+a:focus-visible {
+    outline: 2px solid var(--verde);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+}
