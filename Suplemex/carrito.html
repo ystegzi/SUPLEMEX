@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu carrito | SUPLEMEX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <a href="index.html" class="logo">
+            SUPLEMEX<span>.</span>
+        </a>
+        <nav class="menu">
+            <a href="index.html">← Volver a la tienda</a>
+        </nav>
+    </header>
+
+    <main class="carrito-pagina">
+        <h2>Tu <span>carrito</span></h2>
+
+        <div id="carrito-vacio" class="carrito-vacio">
+            <p>Tu carrito está vacío.</p>
+            <a href="index.html" class="boton boton-principal">Ver productos</a>
+        </div>
+
+        <div id="carrito-contenido" class="carrito-contenido" style="display:none;">
+            <div id="lista-carrito"></div>
+
+            <div class="carrito-total">
+                <p>Total: <span id="total">$0</span></p>
+            </div>
+
+            <button class="boton boton-principal" onclick="pedirPorWhatsApp()">Pedir por WhatsApp</button>
+        </div>
+    </main>
+
+    <footer class="pie-pagina">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <p>© 2026 SUPLEMEX. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
