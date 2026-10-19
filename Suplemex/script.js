@@ -24,7 +24,7 @@ function agregarAlCarrito(nombre, precio) {
 function animarAlCarrito() {
     // Encontrar el botón del carrito en el menú
     const carritoEnlace = document.querySelector('.carrito-enlace');
-    if (!carritoEnlace) return;
+    if (!carritoEnlace) return;   
 
     // Posición del carrito en la pantalla
     const carritoRect = carritoEnlace.getBoundingClientRect();
@@ -123,3 +123,5 @@ function pedirPorWhatsApp() {
 // Al cargar la página, mostrar el carrito y el contador
 mostrarCarrito();
 actualizarContador();
+
+ 
