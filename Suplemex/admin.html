@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración | SUPLEMEX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pagina-admin">
+    <header class="encabezado">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <nav class="menu">
+            <a href="index.html">Ver tienda</a>
+            <a href="login.html">Mi cuenta</a>
+            <button id="admin-cerrar-sesion" class="admin-salir" type="button" hidden>Cerrar sesión</button>
+        </nav>
+    </header>
+
+    <main class="admin-pagina">
+        <section class="admin-hero">
+            <div>
+                <p class="subtitulo">CENTRO DE CONTROL</p>
+                <h1>Administración<span>.</span></h1>
+                <p>Gestiona pedidos y revisa las cuentas de SUPLEMEX.</p>
+            </div>
+            <button id="admin-actualizar" class="boton boton-secundario" type="button" hidden>Actualizar datos</button>
+        </section>
+
+        <p id="admin-mensaje" class="auth-mensaje" role="status" aria-live="polite">Comprobando acceso...</p>
+
+        <div id="admin-panel" hidden>
+            <section class="admin-estadisticas" aria-label="Resumen">
+                <article class="admin-stat">
+                    <span>Pedidos pendientes</span>
+                    <strong id="admin-pendientes">0</strong>
+                </article>
+                <article class="admin-stat">
+                    <span>Pedidos confirmados</span>
+                    <strong id="admin-confirmados">0</strong>
+                </article>
+                <article class="admin-stat">
+                    <span>Cuentas registradas</span>
+                    <strong id="admin-cuentas">0</strong>
+                </article>
+                <article class="admin-stat">
+                    <span>Correos por confirmar</span>
+                    <strong id="admin-no-confirmadas">0</strong>
+                </article>
+            </section>
+
+            <section class="admin-seccion" aria-labelledby="admin-pedidos-titulo">
+                <div class="admin-seccion-cabecera">
+                    <div>
+                        <p class="subtitulo">VENTAS</p>
+                        <h2 id="admin-pedidos-titulo">Pedidos</h2>
+                    </div>
+                    <label class="admin-filtro">
+                        <span class="sr-only">Filtrar pedidos</span>
+                        <select id="admin-filtro-pedidos">
+                            <option value="all">Todos los pedidos</option>
+                            <option value="pending">Pendientes</option>
+                            <option value="confirmed">Confirmados</option>
+                            <option value="shipped">Enviados</option>
+                            <option value="cancelled">Cancelados</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="admin-tabla-contenedor">
+                    <table class="admin-tabla">
+                        <thead>
+                            <tr>
+                                <th>Pedido</th>
+                                <th>Cliente</th>
+                                <th>Productos</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Actualizar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-pedidos"></tbody>
+                    </table>
+                </div>
+                <p id="admin-pedidos-vacios" class="admin-vacio" hidden>No hay pedidos para mostrar.</p>
+            </section>
+
+            <section class="admin-seccion" aria-labelledby="admin-cuentas-titulo">
+                <div class="admin-seccion-cabecera">
+                    <div>
+                        <p class="subtitulo">CLIENTES</p>
+                        <h2 id="admin-cuentas-titulo">Cuentas</h2>
+                    </div>
+                    <label class="admin-busqueda">
+                        <span class="sr-only">Buscar cuenta por correo</span>
+                        <input id="admin-buscar-cuentas" type="search" placeholder="Buscar correo…">
+                    </label>
+                </div>
+                <div class="admin-tabla-contenedor">
+                    <table class="admin-tabla">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo electrónico</th>
+                                <th>Verificación</th>
+                                <th>Registro</th>
+                                <th>Último acceso</th>
+                                <th>Acciones de cuenta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-lista-cuentas"></tbody>
+                    </table>
+                </div>
+                <p id="admin-cuentas-vacias" class="admin-vacio" hidden>No se encontraron cuentas.</p>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="pie-pagina">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <p>Panel privado de administración</p>
+        <a href="index.html" class="volver-arriba">Volver a la tienda</a>
+    </footer>
+
+    <script type="module" src="admin.js"></script>
+</body>
+
+</html>

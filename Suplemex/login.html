@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión | SUPLEMEX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pagina-auth">
+    <header class="encabezado">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <nav class="menu">
+            <a href="index.html#productos">Productos</a>
+            <a href="carrito.html" class="carrito-enlace">Carrito <span id="contador">0</span></a>
+        </nav>
+    </header>
+
+    <main class="auth-pagina">
+        <section id="auth-panel" class="auth-panel" aria-labelledby="auth-titulo">
+            <p class="subtitulo">CUENTA SUPLEMEX</p>
+            <h1 id="auth-titulo">Inicia sesión</h1>
+            <p id="auth-descripcion" class="auth-descripcion">Accede con tu correo y contraseña.</p>
+
+            <div id="auth-configuracion" class="auth-mensaje auth-aviso" role="status" hidden>
+                El acceso está pendiente de configuración de Supabase. Añade la URL y la clave pública del proyecto en <code>supabase-config.js</code>.
+            </div>
+            <div id="auth-mensaje" class="auth-mensaje" role="status" aria-live="polite" hidden></div>
+
+            <form id="auth-form">
+                <label id="auth-email-label" for="auth-email">Correo electrónico</label>
+                <input id="auth-email" name="email" type="email" autocomplete="email" required>
+
+                <label id="auth-password-label" for="auth-password">Contraseña</label>
+                <input id="auth-password" name="password" type="password" autocomplete="current-password" required>
+
+                <label id="auth-confirm-label" for="auth-confirm" hidden>Confirmar contraseña</label>
+                <input id="auth-confirm" name="confirm-password" type="password" autocomplete="new-password" hidden>
+
+                <button id="auth-submit" class="boton boton-principal auth-submit" type="submit">Iniciar sesión</button>
+            </form>
+
+            <button id="auth-recuperar" class="auth-enlace" type="button">Olvidé mi contraseña</button>
+            <button id="auth-reenviar-confirmacion" class="auth-enlace" type="button" hidden>Reenviar correo de verificación</button>
+            <p class="auth-cambio-modo">
+                <span id="auth-cambio-texto">¿No tienes cuenta?</span>
+                <button id="auth-cambiar-modo" class="auth-enlace" type="button">Crear cuenta</button>
+            </p>
+
+            <div id="auth-sesion" class="auth-sesion" hidden>
+                <div class="auth-cuenta-resumen">
+                    <span id="auth-avatar" class="auth-avatar" aria-hidden="true">S</span>
+                    <div class="auth-identidad">
+                        <strong id="auth-nombre-resumen">Mi cuenta</strong>
+                        <span id="auth-usuario"></span>
+                    </div>
+                    <span id="auth-estado-cuenta" class="auth-estado-cuenta"></span>
+                </div>
+
+                <div class="auth-ajustes">
+                    <nav class="auth-ajustes-nav" aria-label="Secciones de configuración">
+                        <p class="auth-nav-titulo">CONFIGURACIÓN</p>
+                        <a href="#auth-perfil" class="auth-nav-enlace auth-nav-activo">Perfil</a>
+                        <a href="#auth-correo-seccion" class="auth-nav-enlace">Correo electrónico</a>
+                        <a href="#auth-seguridad" class="auth-nav-enlace">Seguridad</a>
+                        <a href="#auth-sesiones" class="auth-nav-enlace">Sesión</a>
+                        <a href="#auth-eliminar" class="auth-nav-enlace auth-nav-peligro">Eliminar cuenta</a>
+                    </nav>
+
+                    <div class="auth-ajustes-contenido">
+                        <section id="auth-perfil" class="auth-ajuste-seccion" aria-labelledby="auth-perfil-titulo">
+                            <div class="auth-seccion-encabezado">
+                                <span class="auth-seccion-icono" aria-hidden="true">01</span>
+                                <div>
+                                    <h2 id="auth-perfil-titulo">Tu perfil</h2>
+                                    <p>Personaliza cómo aparece tu cuenta.</p>
+                                </div>
+                            </div>
+                            <form id="auth-profile-form">
+                                <label for="auth-nombre">Nombre</label>
+                                <input id="auth-nombre" name="name" type="text" autocomplete="name" maxlength="80" required placeholder="Tu nombre">
+                                <button id="auth-guardar-perfil" class="boton boton-principal auth-accion" type="submit">Guardar cambios</button>
+                            </form>
+                        </section>
+
+                        <section id="auth-correo-seccion" class="auth-ajuste-seccion" aria-labelledby="auth-correo-titulo">
+                            <div class="auth-seccion-encabezado">
+                                <span class="auth-seccion-icono" aria-hidden="true">02</span>
+                                <div>
+                                    <h2 id="auth-correo-titulo">Correo electrónico</h2>
+                                    <p>El correo se usa para iniciar sesión y recibir avisos de seguridad.</p>
+                                </div>
+                            </div>
+                            <p class="auth-campo-titulo">Correo actual</p>
+                            <p id="auth-correo-actual" class="auth-correo-actual"></p>
+                            <form id="auth-email-form">
+                                <label for="auth-nuevo-correo">Nuevo correo electrónico</label>
+                                <input id="auth-nuevo-correo" name="new-email" type="email" autocomplete="email" required placeholder="nombre@ejemplo.com">
+                                <p class="auth-ayuda">Te enviaremos un correo para confirmar el cambio.</p>
+                                <button id="auth-guardar-correo" class="boton boton-secundario auth-accion" type="submit">Actualizar correo</button>
+                            </form>
+                        </section>
+
+                        <section id="auth-seguridad" class="auth-ajuste-seccion" aria-labelledby="auth-seguridad-titulo">
+                            <div class="auth-seccion-encabezado">
+                                <span class="auth-seccion-icono" aria-hidden="true">03</span>
+                                <div>
+                                    <h2 id="auth-seguridad-titulo">Seguridad</h2>
+                                    <p>Usa una contraseña segura de al menos 8 caracteres.</p>
+                                </div>
+                            </div>
+                            <form id="auth-password-form">
+                                <label for="auth-nueva-password">Nueva contraseña</label>
+                                <input id="auth-nueva-password" name="new-password" type="password" autocomplete="new-password" minlength="8" required>
+                                <label for="auth-confirmar-password">Confirmar nueva contraseña</label>
+                                <input id="auth-confirmar-password" name="confirm-new-password" type="password" autocomplete="new-password" minlength="8" required>
+                                <button id="auth-guardar-password" class="boton boton-secundario auth-accion" type="submit">Actualizar contraseña</button>
+                            </form>
+                        </section>
+
+                        <section id="auth-sesiones" class="auth-ajuste-seccion auth-ajuste-sesion" aria-labelledby="auth-sesion-titulo">
+                            <div class="auth-seccion-encabezado">
+                                <span class="auth-seccion-icono" aria-hidden="true">04</span>
+                                <div>
+                                    <h2 id="auth-sesion-titulo">Tu sesión</h2>
+                                    <p>Cierra el acceso a tu cuenta en este dispositivo.</p>
+                                </div>
+                            </div>
+                            <button id="auth-cerrar-sesion" class="boton boton-peligro auth-accion" type="button">Cerrar sesión</button>
+                        </section>
+
+                        <section id="auth-eliminar" class="auth-ajuste-seccion auth-ajuste-eliminar" aria-labelledby="auth-eliminar-titulo">
+                            <div class="auth-seccion-encabezado">
+                                <span class="auth-seccion-icono" aria-hidden="true">!</span>
+                                <div>
+                                    <h2 id="auth-eliminar-titulo">Zona de peligro</h2>
+                                    <p>Eliminar tu cuenta es permanente y no se puede deshacer.</p>
+                                </div>
+                            </div>
+                            <p class="auth-eliminar-nota">Tus pedidos anteriores se conservarán para el registro de la tienda, pero dejarán de estar asociados a tu cuenta.</p>
+                            <button id="auth-mostrar-eliminar" class="boton boton-peligro auth-accion" type="button">Eliminar mi cuenta</button>
+                            <form id="auth-eliminar-form" class="auth-eliminar-form" hidden>
+                                <label for="auth-eliminar-password">Confirma tu contraseña actual</label>
+                                <input id="auth-eliminar-password" name="current-password" type="password" autocomplete="current-password" required>
+                                <label for="auth-eliminar-confirmacion">Escribe ELIMINAR para confirmar</label>
+                                <input id="auth-eliminar-confirmacion" name="confirmation" type="text" autocomplete="off" required>
+                                <div class="auth-eliminar-acciones">
+                                    <button id="auth-cancelar-eliminar" class="boton boton-secundario" type="button">Cancelar</button>
+                                    <button id="auth-confirmar-eliminar" class="boton boton-peligro" type="submit">Eliminar cuenta definitivamente</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <a href="index.html" class="volver-catalogo">← Volver a la tienda</a>
+    </main>
+
+    <footer class="pie-pagina">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <p>© 2026 SUPLEMEX. Todos los derechos reservados.</p>
+        <a href="index.html#productos" class="volver-arriba">Ver productos</a>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+
+</html>

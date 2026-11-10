@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto | SUPLEMEX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="encabezado">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <nav class="menu">
+            <a href="index.html#productos">Productos</a>
+            <a href="carrito.html" class="carrito-enlace">Carrito <span id="contador">0</span></a>
+            <a href="login.html">Ingresar</a>
+        </nav>
+    </header>
+
+    <div id="aviso-carrito" class="aviso-carrito" role="status" aria-live="polite" aria-atomic="true" hidden>
+        <span class="aviso-carrito-mensaje"></span>
+        <a href="carrito.html">Ver carrito</a>
+    </div>
+
+    <main class="detalle-pagina">
+        <a href="index.html#productos" class="volver-catalogo">← Volver a productos</a>
+        <section id="pagina-producto" class="producto-detalle" aria-live="polite">
+            <div class="producto-detalle-imagen">
+                <img id="imagen-detalle" alt="">
+            </div>
+            <div class="producto-detalle-info">
+                <p id="categoria-detalle" class="producto-categoria"></p>
+                <h1 id="nombre-detalle"></h1>
+                <p id="descripcion-detalle" class="producreo-detalle-descripcion"></p>
+
+                <fieldset class="opciones-producto">
+                    <legend>Presentación</legend>
+                    <div id="presentaciones-detalle" class="presentaciones-detalle"></div>
+                </fieldset>
+
+                <div id="selector-sabor-contenedor" class="selector-sabor-contenedor" hidden>
+                    <label for="sabor-detalle">Sabor</label>
+                    <select id="sabor-detalle">
+                        <option value="" selected disabled>Elige un sabor</option>
+                    </select>
+                </div>
+
+                <p id="precio-detalle" class="precio precio-detalle">Selecciona una presentación</p>
+                <button id="agregar-detalle" type="button" class="boton boton-principal boton-agregar-detalle" disabled>Agregar al carrito</button>
+                <p class="detalle-nota">Precios en USD. Consulta el costo de envío por WhatsApp.</p>
+            </div>
+        </section>
+        <section id="producto-no-encontrado" class="producto-no-encontrado" hidden>
+            <h1>Producto no encontrado</h1>
+            <a href="index.html#productos" class="boton boton-principal">Volver al catálogo</a>
+        </section>
+    </main>
+
+    <footer class="pie-pagina">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <p>© 2026 SUPLEMEX. Todos los derechos reservados.</p>
+        <a href="index.html#productos" class="volver-arriba">Ver productos</a>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+
+</html>

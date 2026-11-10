@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tu carrito | SUPLEMEX</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <a href="index.html" class="logo">
+            SUPLEMEX<span>.</span>
+        </a>
+        <nav class="menu">
+            <a href="index.html">← Volver a la tienda</a>
+            <a href="login.html">Ingresar</a>
+        </nav>
+    </header>
+
+    <main class="carrito-pagina">
+        <h2>Tu <span>carrito</span></h2>
+
+        <div id="carrito-vacio" class="carrito-vacio">
+            <p>Tu carrito está vacío.</p>
+            <a href="index.html" class="boton boton-principal">Ver productos</a>
+        </div>
+
+        <div id="carrito-contenido" class="carrito-contenido" style="display:none;">
+            <div id="lista-carrito" aria-live="polite"></div>
+
+            <div class="carrito-total">
+                <p>Total: <span id="total">$0</span></p>
+            </div>
+
+            <p class="carrito-nota">Los pedidos quedan pendientes hasta que el equipo SUPLEMEX confirme disponibilidad, envío y pago. Puedes comprar como invitado; iniciar sesión facilita el seguimiento.</p>
+            <button type="button" class="boton boton-principal" onclick="pedirPorWhatsApp()">Finalizar pedido</button>
+            <a class="carrito-seguir" href="index.html#productos">← Seguir comprando</a>
+            <p id="estado-pedido" class="estado-pedido" role="status" aria-live="polite"></p>
+        </div>
+
+        <dialog id="dialogo-pedido" class="dialogo-pedido" aria-labelledby="dialogo-pedido-titulo">
+            <div class="dialogo-pedido-contenido">
+                <p class="subtitulo">FINALIZAR PEDIDO</p>
+                <h3 id="dialogo-pedido-titulo">Confirma tus datos</h3>
+                <div id="resumen-pedido" class="resumen-pedido"></div>
+                <p class="dialogo-pedido-nota">Puedes continuar como invitado. <a href="login.html">Inicia sesión</a> para asociar este pedido a tu cuenta.</p>
+                <p id="checkout-mensaje" class="auth-mensaje" role="status" aria-live="polite" hidden></p>
+                <form id="checkout-form" class="checkout-form">
+                    <label for="checkout-nombre">Nombre completo</label>
+                    <input id="checkout-nombre" name="name" type="text" autocomplete="name" maxlength="100" required>
+
+                    <label for="checkout-correo">Correo electrónico</label>
+                    <input id="checkout-correo" name="email" type="email" autocomplete="email" maxlength="254" required>
+
+                    <label for="checkout-telefono">Teléfono / WhatsApp</label>
+                    <input id="checkout-telefono" name="phone" type="tel" autocomplete="tel" maxlength="30" required>
+
+                    <label for="checkout-ciudad">Ciudad</label>
+                    <input id="checkout-ciudad" name="city" type="text" autocomplete="address-level2" maxlength="100" required>
+
+                    <label for="checkout-direccion">Dirección de entrega <span>(opcional)</span></label>
+                    <input id="checkout-direccion" name="address" type="text" autocomplete="street-address" maxlength="300">
+
+                    <label for="checkout-notas">Notas del pedido <span>(opcional)</span></label>
+                    <textarea id="checkout-notas" name="notes" rows="3" maxlength="500"></textarea>
+
+                    <div class="checkout-campo-trampa" aria-hidden="true">
+                        <label for="checkout-website">Sitio web</label>
+                        <input id="checkout-website" name="website" type="text" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    <div class="dialogo-pedido-acciones">
+                        <button id="cerrar-dialogo-pedido" type="button" class="boton boton-secundario">Seguir revisando</button>
+                        <button id="checkout-submit" type="submit" class="boton boton-principal">Enviar pedido</button>
+                    </div>
+                </form>
+
+                <div id="checkout-exito" class="checkout-exito" hidden>
+                    <p class="checkout-exito-icono" aria-hidden="true">✓</p>
+                    <h4>¡Pedido recibido!</h4>
+                    <p>Tu número de pedido es <strong id="checkout-numero-pedido"></strong>. Queda pendiente hasta que SUPLEMEX confirme disponibilidad y envío.</p>
+                    <a id="abrir-whatsapp-pedido" class="boton boton-principal" href="#" target="_blank" rel="noopener noreferrer">Continuar por WhatsApp</a>
+                </div>
+            </div>
+        </dialog>
+    </main>
+
+    <footer class="pie-pagina">
+        <a href="index.html" class="logo">SUPLEMEX<span>.</span></a>
+        <p>© 2026 SUPLEMEX. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module" src="checkout.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+
+</html>

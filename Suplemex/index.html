@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUPLEMEX | Nutrición deportiva</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header class="encabezado">
+        <a href="#inicio" class="logo">
+            SUPLEMEX<span>.</span>
+        </a>
+
+        <nav class="menu">
+            <a href="#productos">Productos</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#contacto">Contacto</a>
+            <a href="carrito.html" class="carrito-enlace">Carrito <span id="contador">0</span></a>
+            <a href="login.html">Ingresar</a>
+        </nav>
+    </header>
+
+    <div id="aviso-carrito" class="aviso-carrito" role="status" aria-live="polite" aria-atomic="true" hidden>
+        <span class="aviso-carrito-mensaje"></span>
+        <a href="carrito.html">Ver carrito</a>
+    </div>
+
+    <main>
+
+        <!-- PORTADA -->
+        <section id="inicio" class="portada">
+            <div class="portada-contenido">
+                <p class="subtitulo">NUTRICIÓN DEPORTIVA</p>
+                <h1>
+                    LLEVA TU RENDIMIENTO
+                    <span>AL SIGUIENTE NIVEL</span>
+                </h1>
+                <p class="descripcion">
+                    Encuentra los suplementos que complementan tu entrenamiento y te ayudan a trabajar por tus objetivos.
+                </p>
+                <div class="portada-botones">
+                    <a href="#productos" class="boton boton-principal">Ver productos</a>
+                    <a href="#nosotros" class="boton boton-secundario">Conócenos</a>
+                </div>
+            </div>
+
+            <div class="portada-imagen">
+                <img src="https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&w=900&q=85" alt="Suplemento deportivo">
+            </div>
+
+            <div class="ventajas" aria-label="Ventajas de SUPLEMEX">
+                <div>
+                    <span class="ventaja-marca" aria-hidden="true"></span>
+                    <p>Suplementos seleccionados</p>
+                </div>
+                <div>
+                    <span class="ventaja-marca" aria-hidden="true"></span>
+                    <p>Compra directa por WhatsApp</p>
+                </div>
+                <div>
+                    <span class="ventaja-marca" aria-hidden="true"></span>
+                    <p>Asesoría para tus objetivos</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTOS -->
+        <section id="productos" class="productos">
+            <div class="seccion-encabezado">
+                <h2>Nuestros <span>Productos</span></h2>
+                <p>Suplementos seleccionados para potenciar tu rendimiento.</p>
+            </div>
+
+            <div class="productos-grid">
+
+                <a class="tarjeta" href="producto.html?producto=proteina" aria-label="Ver detalles y presentaciones de Proteína Whey">
+                    <div class="producto-imagen">
+                        <img src="https://www.optimumnutrition.com/cdn/shop/files/US_GSW_5LB_EXTMILKCHOC_Main_Image.png?v=1777475681&width=2500" alt="Proteína Whey">
+                    </div>
+                    <div class="producto-info">
+                        <p class="producto-categoria">PROTEÍNAS</p>
+                        <h3>Proteína Whey</h3>
+                        <p class="producto-descripcion">Ideal para complementar tu alimentación y apoyar la recuperación muscular.</p>
+                        <div class="producto-pie">
+                            <p class="precio">Desde $80 USD</p>
+                            <span class="boton-comprar">Ver producto</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="tarjeta" href="producto.html?producto=creatina" aria-label="Ver detalles y presentaciones de Creatina">
+                    <div class="producto-imagen">
+                        <img src="https://www.optimumnutrition.com/cdn/shop/files/on-1153060_Image_01.png?v=1785779148&width=2000" alt="Creatina">
+                    </div>
+                    <div class="producto-info">
+                        <p class="producto-categoria">RENDIMIENTO</p>
+                        <h3>Creatina</h3>
+                        <p class="producto-descripcion">Para apoyar el rendimiento deportivo en entrenamientos de alta intensidad.</p>
+                        <div class="producto-pie">
+                            <p class="precio">Desde $22 USD</p>
+                            <span class="boton-comprar">Ver producto</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a class="tarjeta" href="producto.html?producto=bcaa" aria-label="Ver detalles y presentaciones de BCAA">
+                    <div class="producto-imagen">
+                        <img src="https://www.optimumnutrition.com/cdn/shop/files/on-1031737_Image_01.png?v=1755796109&width=600" alt="BCAA">
+                    </div>
+                    <div class="producto-info">
+                        <p class="producto-categoria">AMINOÁCIDOS</p>
+                        <h3>BCAA</h3>
+                        <p class="producto-descripcion">Aminoácidos esenciales para reducir la fatiga durante el ejercicio.</p>
+                        <div class="producto-pie">
+                            <p class="precio">Desde $28 USD</p>
+                            <span class="boton-comprar">Ver producto</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- NOSOTROS -->
+        <section id="nosotros" class="nosotros">
+            <div class="nosotros-contenido">
+                <p class="subtitulo">SOBRE NOSOTROS</p>
+                <h2>Tu aliado en <span>nutrición deportiva</span></h2>
+                <p>
+                    En SUPLEMEX ofrecemos suplementos de calidad para acompañarte en cada etapa de tu entrenamiento.
+                    Creemos que el rendimiento se construye con constancia, buena alimentación y los productos adecuados.
+                </p>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto" class="contacto">
+            <p class="subtitulo">CONTACTO</p>
+            <h2>¿Listo para <span>empezar?</span></h2>
+            <p>Escríbenos y te ayudamos a elegir el suplemento ideal para tus objetivos. Respondemos rápido.</p>
+            <a href="https://wa.me/593990848845" class="boton boton-principal">Escríbenos</a>
+
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="pie-pagina">
+        <a href="#inicio" class="logo">SUPLEMEX<span>.</span></a>
+        <p>© 2026 SUPLEMEX. Todos los derechos reservados.</p>
+        <a href="#inicio" class="volver-arriba">Volver arriba ↑</a>
+    </footer>
+
+    <script src="script.js"></script>
+    <script type="module" src="auth.js"></script>
+</body>
+
+</html>
