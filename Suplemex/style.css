@@ -1109,6 +1109,15 @@ a:focus-visible {
     object-fit: contain;
 }
 
+.producto-detalle-imagen img.imagen-producto-alejada {
+    width: 66%;
+    height: 66%;
+    position: relative;
+    top: 32px;
+    justify-self: center;
+    object-position: center;
+}
+
 .producto-detalle-info {
     min-width: 0;
 }
@@ -1465,6 +1474,16 @@ a:focus-visible {
     height: 100%;
     object-fit: contain;
     transition: transform 0.4s ease;
+}
+
+.producto-imagen img.imagen-producto-alejada {
+    display: block;
+    width: 66%;
+    height: 66%;
+    margin: auto;
+    position: relative;
+    top: 32px;
+    object-position: center;
 }
 
 .tarjeta:hover .producto-imagen img {

@@ -289,6 +289,38 @@ const productosCatalogo = {
             { nombre: '60 cápsulas', precio: 28 },
             { nombre: '100 cápsulas', precio: 40 }
         ]
+    },
+    'red-rex-big-whey': {
+        nombre: 'Red Rex Big Whey',
+        categoria: 'PROTEÍNAS',
+        descripcion: 'Proteína de suero concentrada, aislada e hidrolizada. Aporta 24 g de proteína por scoop y aminoácidos completos. Baja en calorías, carbohidratos y grasas, sin azúcar añadida; ayuda a promover la recuperación y el crecimiento muscular magro.',
+        imagen: 'images/red-rex-big-whey.png',
+        imagenAlejada: true,
+        presentaciones: [
+            { nombre: '4.5 Lbs', precio: 79.80 }
+        ],
+        sabores: ['Vainilla']
+    },
+    'cbum-essential-pre': {
+        nombre: 'CBUM Essential Pre',
+        categoria: 'PRE ENTRENAMIENTO',
+        descripcion: 'Preentreno esencial de la serie CBUM, adecuado para principiantes y avanzados. Contiene dosis definidas de L-citrulina, beta alanina y cafeína para apoyar la energía, concentración, circulación, bombeo muscular, resistencia y reducir la fatiga. Modo de empleo: tomar 1 servida 30 minutos antes del entrenamiento físico.',
+        imagen: 'images/cbum-essential-pre.png',
+        imagenAlejada: true,
+        presentaciones: [
+            { nombre: '30 servicios', precio: 36 }
+        ],
+        sabores: ['Champion Mentality – Citrus Slush']
+    },
+    'saxofit-colageno': {
+        nombre: 'Saxofit Colágeno',
+        categoria: 'COLÁGENO',
+        descripcion: 'Colágeno hidrolizado en polvo de rápida absorción, sin sabor ni componentes adicionales. Promueve la elasticidad de la piel, fortalece uñas y cabello y da soporte a huesos y articulaciones. Elaborado con materia prima española. Modo de empleo: tomar 1 servida completa una vez al día.',
+        imagen: 'images/saxofit-colageno.png',
+        imagenAlejada: true,
+        presentaciones: [
+            { nombre: '300 g · 30 servicios', precio: 23 }
+        ]
     }
 };
 
@@ -311,6 +343,7 @@ function iniciarPaginaProducto() {
     const imagen = document.getElementById('imagen-detalle');
     imagen.src = producto.imagen;
     imagen.alt = producto.nombre;
+    imagen.classList.toggle('imagen-producto-alejada', Boolean(producto.imagenAlejada));
 
     const opciones = document.getElementById('presentaciones-detalle');
     const precio = document.getElementById('precio-detalle');
