@@ -201,33 +201,11 @@
         <a href="#inicio" class="volver-arriba">Volver arriba ↑</a>
     </footer>
 
-    <section class="chatbot" aria-label="Asistente virtual de SUPLEMEX">
-        <div id="chatbot-panel" class="chatbot-panel" hidden>
-            <div class="chatbot-encabezado">
-                <div>
-                    <strong>Asistente SUPLEMEX</strong>
-                    <span>Respuestas sobre la tienda</span>
-                </div>
-                <button id="chatbot-cerrar" class="chatbot-cerrar" type="button" aria-label="Cerrar chat">×</button>
-            </div>
-            <div id="chatbot-mensajes" class="chatbot-mensajes" role="log" aria-live="polite" aria-relevant="additions">
-                <p class="chatbot-mensaje chatbot-mensaje-asistente">¡Hola! Puedo ayudarte con nuestros productos y con cómo comprar. ¿Qué te gustaría saber?</p>
-            </div>
-            <form id="chatbot-formulario" class="chatbot-formulario">
-                <label class="sr-only" for="chatbot-entrada">Escribe tu pregunta</label>
-                <input id="chatbot-entrada" name="message" type="text" maxlength="1000" placeholder="Escribe tu pregunta..." autocomplete="off" required>
-                <button id="chatbot-enviar" type="submit">Enviar</button>
-            </form>
-            <p class="chatbot-nota">No ofrece recomendaciones médicas. Consulta a un profesional de salud.</p>
-        </div>
-        <button id="chatbot-abrir" class="chatbot-abrir" type="button" aria-controls="chatbot-panel" aria-expanded="false">
-            <span aria-hidden="true">✦</span> ¿Necesitas ayuda?
-        </button>
-    </section>
+    <div id="chatbot-root"></div>
 
     <script src="script.js"></script>
     <script type="module" src="auth.js"></script>
-    <script type="module" src="chatbot.js"></script>
+    <script defer src="chatbot-widget.js"></script>
 </body>
 
 </html>

@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build:chatbot": "esbuild Suplemex/frontend/chatbot.jsx --bundle --minify --format=iife --target=es2020 --jsx=automatic --outfile=Suplemex/frontend/chatbot-widget.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +20,11 @@
   },
   "homepage": "https://github.com/ystegzi/SUPLEMEX#readme",
   "dependencies": {
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
   }
 }

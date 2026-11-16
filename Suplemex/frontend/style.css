@@ -1903,7 +1903,6 @@ a:focus-visible {
     border-radius: 8px;
 }
 
-.chatbot-abrir:disabled,
 .chatbot-enviar:disabled {
     cursor: wait;
     opacity: 0.65;

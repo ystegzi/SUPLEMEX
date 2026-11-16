@@ -26,20 +26,30 @@ Al cambiar una Edge Function, vuelve a desplegarla desde `backend`. Después de 
 ## 3. Configurar el asistente con IA
 
 1. Crea una clave de API en tu cuenta de OpenAI. No la pongas en archivos del frontend ni la compartas públicamente.
-2. Desde `backend`, guarda la clave como secreto de Supabase y publica la función:
+2. Abre una terminal nueva en la raíz del proyecto, instala las dependencias y compila el widget React para la página estática:
 
 ```powershell
+npm.cmd install
+npm.cmd run build:chatbot
+```
+
+3. Desde `backend`, guarda la clave como secreto de Supabase y publica la función:
+
+```powershell
+cd backend
 supabase secrets set OPENAI_API_KEY=TU_CLAVE_DE_OPENAI
 supabase functions deploy chatbot
 ```
+
+El código React está en `Suplemex/frontend/chatbot.jsx` y `npm run build:chatbot` genera `Suplemex/frontend/chatbot-widget.js`, que carga la tienda estática. Repite el build después de cambiar el JSX y publica ese archivo junto con el frontend.
 
 Reemplaza `TU_CLAVE_DE_OPENAI` en la terminal por tu clave; no la agregues a Git ni a `frontend`. El asistente usa `gpt-4o-mini`. Las llamadas a OpenAI pueden generar cargos según tu cuenta y uso. La función limita el tamaño del historial y el tiempo de espera, pero antes de publicarla para uso amplio configura límites de consumo en tu proyecto de OpenAI y considera agregar controles contra abuso.
 
 ## 4. Probar
 
 1. Confirma la cuenta `ystegz2009@gmail.com` desde su correo e inicia sesión en la tienda.
-2. Configura `OPENAI_API_KEY` y publica `chatbot` siguiendo la sección anterior. Abre `frontend/index.html` desde el mismo servidor local y prueba una pregunta sobre el catálogo.
-3. Abre `frontend/admin.html` desde ese servidor. El enlace **Administración** también aparecerá en el menú al iniciar sesión con el correo autorizado.
+2. Configura `OPENAI_API_KEY`, compila el widget React y publica `chatbot` siguiendo la sección anterior. Abre `Suplemex/frontend/index.html` desde el mismo servidor local y prueba una pregunta sobre el catálogo.
+3. Abre `Suplemex/frontend/admin.html` desde ese servidor. El enlace **Administración** también aparecerá en el menú al iniciar sesión con el correo autorizado.
 4. Envía un pedido desde el carrito como invitado o con una cuenta; aparecerá como **Pendiente**.
 5. En Administración puedes confirmar, marcar como enviado o cancelar pedidos, ver las cuentas con su estado de verificación, enviar un enlace para cambiar la contraseña y eliminar cuentas no administradoras confirmando el correo exacto. Los pedidos históricos se conservan y se desvinculan de la cuenta.
 
