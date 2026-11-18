@@ -44,6 +44,34 @@ let cliente = null;
 let mostrarReenvioConfirmacion = false;
 let sesionAnterior = false;
 
+// --- Recuperación de contraseña ---
+// El enlace del correo trae datos en la dirección (por ejemplo #type=recovery o un error).
+// Se leen aquí, antes de que Supabase limpie la dirección.
+const CLAVE_RECUPERACION = 'suplemex-recuperacion';
+
+function leerMarcaRecuperacion() {
+    try { return sessionStorage.getItem(CLAVE_RECUPERACION) === '1'; } catch { return false; }
+}
+
+function guardarMarcaRecuperacion() {
+    try { sessionStorage.setItem(CLAVE_RECUPERACION, '1'); } catch { /* sin almacenamiento */ }
+}
+
+function borrarMarcaRecuperacion() {
+    try { sessionStorage.removeItem(CLAVE_RECUPERACION); } catch { /* sin almacenamiento */ }
+}
+
+const datosEnlace = new URLSearchParams(`${window.location.hash.slice(1)}&${window.location.search.slice(1)}`);
+const vieneDeEnlaceRecuperacion = datosEnlace.get('type') === 'recovery' || leerMarcaRecuperacion();
+const errorEnlace = datosEnlace.get('error_code') || datosEnlace.get('error');
+
+function mensajeErrorEnlace(codigo) {
+    if (codigo === 'otp_expired') {
+        return 'El enlace para cambiar la contraseña venció o ya se usó. Escribe tu correo y pide uno nuevo.';
+    }
+    return 'El enlace no es válido. Escribe tu correo y pide uno nuevo con "Olvidé mi contraseña".';
+}
+
 function mostrarMensaje(texto, tipo = 'info') {
     if (!mensaje) return;
     mensaje.textContent = texto;
@@ -133,7 +161,14 @@ function actualizarSesion(usuario) {
 }
 
 if (formulario) {
+    if (errorEnlace) {
+        borrarMarcaRecuperacion();
+        history.replaceState(null, '', window.location.pathname);
+    } else if (vieneDeEnlaceRecuperacion) {
+        modo = 'recuperacion';
+    }
     actualizarModo();
+    if (errorEnlace) mostrarMensaje(mensajeErrorEnlace(errorEnlace), 'error');
     document.querySelectorAll('.auth-nav-enlace').forEach(enlace => {
         enlace.addEventListener('click', () => {
             document.querySelectorAll('.auth-nav-enlace').forEach(item => item.classList.remove('auth-nav-activo'));
@@ -174,12 +209,27 @@ if (cliente) {
     cliente.auth.getSession()
         .then(({ data, error }) => {
             if (error) mostrarMensaje(error.message, 'error');
+            if (modo === 'recuperacion' && !data?.session) {
+                // El enlace no inició la sesión de recuperación (venció o ya se usó).
+                borrarMarcaRecuperacion();
+                modo = 'login';
+                actualizarModo();
+                mostrarMensaje(mensajeErrorEnlace('otp_expired'), 'error');
+            } else if (modo === 'recuperacion') {
+                mostrarMensaje('Escribe tu nueva contraseña.', 'info');
+            }
             actualizarSesion(modo === 'recuperacion' ? null : data?.session?.user);
         })
         .catch(error => mostrarMensaje(`No se pudo consultar la sesión: ${error.message}`, 'error'));
 
     cliente.auth.onAuthStateChange((evento, sessionActual) => {
-        if (evento === 'PASSWORD_RECOVERY' && formulario) {
+        if (evento === 'PASSWORD_RECOVERY' && !formulario) {
+            // Supabase mandó el enlace a otra página (por ejemplo index.html):
+            // se lleva al usuario a login.html para que elija su nueva contraseña.
+            guardarMarcaRecuperacion();
+            window.location.replace('login.html');
+        } else if (evento === 'PASSWORD_RECOVERY' && formulario) {
+            guardarMarcaRecuperacion();
             modo = 'recuperacion';
             actualizarModo();
             actualizarSesion(null);
@@ -224,11 +274,12 @@ if (cliente) {
                 } else if (modo === 'recuperacion') {
                     resultado = await cliente.auth.updateUser({ password: contrasena });
                     if (!resultado.error) {
+                        borrarMarcaRecuperacion();
                         modo = 'login';
                         actualizarModo();
                         campoContrasena.value = '';
                         campoConfirmacion.value = '';
-                        mostrarMensaje('Contraseña actualizada. Ya puedes iniciar sesión.', 'exito');
+                        mostrarMensaje('Contraseña actualizada correctamente. La próxima vez inicia sesión con tu contraseña nueva.', 'exito');
                     }
                 } else {
                     resultado = await cliente.auth.signInWithPassword({ email: correo, password: contrasena });
