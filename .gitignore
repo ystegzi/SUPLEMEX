@@ -1,1 +1,4 @@
 node_modules/
+
+# Variables secretas del servidor Node (claves de API)
+.env

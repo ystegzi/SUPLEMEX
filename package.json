@@ -2,8 +2,10 @@
   "name": "jc",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server/server.js",
   "scripts": {
+    "start": "node server/server.js",
+    "dev": "node --watch server/server.js",
     "build:chatbot": "esbuild Suplemex/frontend/chatbot.jsx --bundle --minify --format=iife --target=es2020 --jsx=automatic --outfile=Suplemex/frontend/chatbot-widget.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,6 +27,10 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "supabase": "^3.2.0"
+  },
+  "engines": {
+    "node": ">=20.12"
   }
 }
