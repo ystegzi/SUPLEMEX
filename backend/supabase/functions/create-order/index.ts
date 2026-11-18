@@ -20,6 +20,15 @@ const products: Record<string, Record<string, { price: number; flavors: string[]
         '60 cápsulas': { price: 28, flavors: [''] },
         '100 cápsulas': { price: 40, flavors: [''] },
     },
+    'Red Rex Big Whey': {
+        '4.5 Lbs': { price: 79.8, flavors: ['Vainilla'] },
+    },
+    'CBUM Essential Pre': {
+        '30 servicios': { price: 36, flavors: ['Champion Mentality – Citrus Slush'] },
+    },
+    'Saxofit Colágeno': {
+        '300 g · 30 servicios': { price: 23, flavors: [''] },
+    },
 } as const;
 
 type OrderLineInput = {
