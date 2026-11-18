@@ -72,6 +72,7 @@ function actualizarNavegacion(usuario) {
 function actualizarModo() {
     const esRegistro = modo === 'registro';
     const esRecuperacion = modo === 'recuperacion';
+    const requiereConfirmacion = esRegistro || esRecuperacion;
     titulo.textContent = esRecuperacion ? 'Crea una nueva contraseña' : esRegistro ? 'Crear cuenta' : 'Inicia sesión';
     descripcion.textContent = esRecuperacion
         ? 'Elige una contraseña nueva para tu cuenta.'
@@ -81,10 +82,11 @@ function actualizarModo() {
     etiquetaContrasena.textContent = esRecuperacion ? 'Nueva contraseña' : 'Contraseña';
     campoContrasena.autocomplete = esRecuperacion || esRegistro ? 'new-password' : 'current-password';
     campoContrasena.minLength = esRegistro || esRecuperacion ? 8 : 0;
-    campoConfirmacion.hidden = !esRegistro;
-    campoConfirmacion.required = esRegistro;
-    campoConfirmacion.minLength = esRegistro ? 8 : 0;
-    etiquetaConfirmacion.hidden = !esRegistro;
+    campoConfirmacion.hidden = !requiereConfirmacion;
+    campoConfirmacion.required = requiereConfirmacion;
+    campoConfirmacion.minLength = requiereConfirmacion ? 8 : 0;
+    etiquetaConfirmacion.textContent = esRecuperacion ? 'Confirmar nueva contraseña' : 'Confirmar contraseña';
+    etiquetaConfirmacion.hidden = !requiereConfirmacion;
     botonEnviar.textContent = esRecuperacion ? 'Guardar contraseña' : esRegistro ? 'Crear cuenta' : 'Iniciar sesión';
     botonCambiarModo.hidden = esRecuperacion;
     cambioTexto.hidden = esRecuperacion;
@@ -172,7 +174,7 @@ if (cliente) {
     cliente.auth.getSession()
         .then(({ data, error }) => {
             if (error) mostrarMensaje(error.message, 'error');
-            actualizarSesion(data?.session?.user);
+            actualizarSesion(modo === 'recuperacion' ? null : data?.session?.user);
         })
         .catch(error => mostrarMensaje(`No se pudo consultar la sesión: ${error.message}`, 'error'));
 
@@ -182,6 +184,8 @@ if (cliente) {
             actualizarModo();
             actualizarSesion(null);
             mostrarMensaje('Escribe tu nueva contraseña.', 'info');
+        } else if (modo === 'recuperacion' && evento !== 'USER_UPDATED') {
+            actualizarSesion(null);
         } else {
             actualizarSesion(sessionActual?.user);
         }
@@ -198,12 +202,15 @@ if (cliente) {
                 const contrasena = campoContrasena.value;
                 let resultado;
 
-                if (modo === 'registro') {
+                if (modo === 'registro' || modo === 'recuperacion') {
                     if (contrasena !== campoConfirmacion.value) {
                         mostrarMensaje('Las contraseñas no coinciden.', 'error');
                         campoConfirmacion.focus();
                         return;
                     }
+                }
+
+                if (modo === 'registro') {
                     resultado = await cliente.auth.signUp({
                         email: correo,
                         password: contrasena,
@@ -220,6 +227,7 @@ if (cliente) {
                         modo = 'login';
                         actualizarModo();
                         campoContrasena.value = '';
+                        campoConfirmacion.value = '';
                         mostrarMensaje('Contraseña actualizada. Ya puedes iniciar sesión.', 'exito');
                     }
                 } else {
@@ -316,10 +324,16 @@ if (cliente) {
                 mostrarMensaje('Escribe tu correo para enviarte el enlace de recuperación.', 'error');
                 return;
             }
+            if (campoCorreo.validity.typeMismatch) {
+                campoCorreo.focus();
+                mostrarMensaje('Escribe un correo electrónico válido.', 'error');
+                return;
+            }
 
             botonRecuperar.disabled = true;
             try {
-                const { error } = await cliente.auth.resetPasswordForEmail(correo, { redirectTo: window.location.href });
+                const redirectTo = new URL('login.html', window.location.href).href;
+                const { error } = await cliente.auth.resetPasswordForEmail(correo, { redirectTo });
                 mostrarMensaje(error ? error.message : 'Si el correo está registrado, recibirás un enlace para cambiar tu contraseña.', error ? 'error' : 'exito');
             } catch (error) {
                 mostrarMensaje(`No se pudo enviar el enlace: ${error.message}`, 'error');
