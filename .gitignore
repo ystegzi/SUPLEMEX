@@ -2,3 +2,6 @@ node_modules/
 
 # Variables secretas del servidor Node (claves de API)
 .env
+
+# Archivos temporales de la CLI de Supabase
+.temp/

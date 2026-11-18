@@ -23,9 +23,9 @@ El `PROJECT_REF` es la parte anterior a `.supabase.co` en la URL de tu proyecto.
 
 Al cambiar una Edge Function, vuelve a desplegarla desde `backend`. Después de agregar las opciones de gestión de cuentas, ejecuta `npx.cmd supabase functions deploy admin-api` desde esa carpeta.
 
-## 3. Configurar el asistente con IA
+## 3. Configurar el asistente con Gemini
 
-1. Crea una clave de API en tu cuenta de OpenAI. No la pongas en archivos del frontend ni la compartas públicamente.
+1. Crea una clave gratuita en Google AI Studio: https://aistudio.google.com/apikey. No la pongas en archivos del frontend ni la compartas públicamente.
 2. Abre una terminal nueva en la raíz del proyecto, instala las dependencias y compila el widget React para la página estática:
 
 ```powershell
@@ -37,13 +37,28 @@ npm.cmd run build:chatbot
 
 ```powershell
 cd backend
-supabase secrets set OPENAI_API_KEY=TU_CLAVE_DE_OPENAI
-supabase functions deploy chatbot
+npx.cmd supabase secrets set GEMINI_API_KEY=TU_CLAVE_DE_GEMINI
+npx.cmd supabase functions deploy chatbot
 ```
 
-El código React está en `Suplemex/frontend/chatbot.jsx` y `npm run build:chatbot` genera `Suplemex/frontend/chatbot-widget.js`, que carga la tienda estática. Repite el build después de cambiar el JSX y publica ese archivo junto con el frontend.
+Opcional: para usar otro modelo de Gemini sin cambiar código, ejecuta `npx.cmd supabase secrets set GEMINI_MODEL=nombre-del-modelo` (por defecto usa `gemini-3.5-flash-lite`).
 
-Reemplaza `TU_CLAVE_DE_OPENAI` en la terminal por tu clave; no la agregues a Git ni a `frontend`. El asistente usa `gpt-4o-mini`. Las llamadas a OpenAI pueden generar cargos según tu cuenta y uso. La función limita el tamaño del historial y el tiempo de espera, pero antes de publicarla para uso amplio configura límites de consumo en tu proyecto de OpenAI y considera agregar controles contra abuso.
+Reemplaza `TU_CLAVE_DE_GEMINI` en la terminal por tu clave; no la agregues a Git ni a `frontend`. El nivel gratuito tiene límites de solicitudes que pueden variar por país y modelo. La función limita el tamaño del historial y el tiempo de espera.
+
+### Estructura del chatbot
+
+| Archivo | Función |
+| --- | --- |
+| `Suplemex/frontend/chatbot.jsx` | Punto de entrada: monta el widget en `#chatbot-root` (lo crea si la página no lo tiene). |
+| `Suplemex/frontend/chatbot/Chatbot.jsx` | Componente React: botón flotante, ventana, bienvenida, sugerencias, indicador de escritura, errores y reintento. |
+| `Suplemex/frontend/chatbot/api.js` | Llamada a la Edge Function `chatbot` (solo usa la clave pública de Supabase). |
+| `Suplemex/frontend/chatbot/formato.jsx` | Muestra negritas, listas y enlaces seguros a la tienda o WhatsApp en las respuestas. |
+| `Suplemex/frontend/chatbot-widget.js` | Archivo compilado que cargan `index.html`, `producto.html` y `carrito.html`. No se edita a mano. |
+| `backend/supabase/functions/chatbot/index.ts` | Backend seguro: catálogo (productos, precios y sabores), instrucciones del asistente, preguntas frecuentes de compra y llamada a Gemini con la clave secreta. |
+
+Después de cambiar cualquier archivo de `Suplemex/frontend/chatbot*`, ejecuta `npm.cmd run build:chatbot` y publica `chatbot-widget.js`. Después de cambiar algo en `backend/supabase/functions`, vuelve a desplegar la función `chatbot`.
+
+**Al agregar o cambiar un producto o precio**, actualízalo en `productosCatalogo` (`Suplemex/frontend/script.js`), en el `catalogo` de `functions/chatbot/index.ts` (para el asistente) y en `create-order/index.ts` (para validar pedidos), y despliega las funciones. Para cambiar el tono o las respuestas sobre compras, edita el texto `storeContext` en `functions/chatbot/index.ts`.
 
 ## 4. Probar
 
@@ -54,3 +69,9 @@ Reemplaza `TU_CLAVE_DE_OPENAI` en la terminal por tu clave; no la agregues a Git
 5. En Administración puedes confirmar, marcar como enviado o cancelar pedidos, ver las cuentas con su estado de verificación, enviar un enlace para cambiar la contraseña y eliminar cuentas no administradoras confirmando el correo exacto. Los pedidos históricos se conservan y se desvinculan de la cuenta.
 
 Los precios y presentaciones de los pedidos se validan en `create-order`; no se confía en el precio enviado por el navegador. Los pedidos no procesan pagos ni generan facturas automáticamente.
+
+## Recuperación de contraseña
+
+En Supabase abre **Authentication → URL Configuration** y agrega la URL pública exacta de `login.html` a **Redirect URLs** (por ejemplo, `https://tu-dominio/login.html`; durante desarrollo agrega también la URL local del servidor). En la página de inicio de sesión, escribe el correo y selecciona **Olvidé mi contraseña**. El enlace del correo devuelve a `login.html`, donde se pueden escribir y confirmar la nueva contraseña.
+
+La entrega del correo depende de la configuración SMTP de Supabase. Para producción, configura un proveedor SMTP y define límites de envío; el servicio de correo de prueba puede tener restricciones.

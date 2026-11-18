@@ -1388,6 +1388,10 @@ a:focus-visible {
     border-radius: 5px;
     font-weight: bold;
     text-align: center;
+    border: 0;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
@@ -1404,6 +1408,7 @@ a:focus-visible {
 
 .boton-secundario {
     border: 1px solid var(--verde);
+    background-color: transparent;
     color: var(--verde);
 }
 
@@ -3186,4 +3191,28 @@ body:has(#chatbot-root) {
     .auth-seccion-encabezado h2 {
         font-size: 17px;
     }
+}
+
+/* BOTONES UNIFICADOS EN LOGIN, REGISTRO Y ADMIN */
+
+.pagina-auth .boton:not(.boton-peligro),
+.pagina-admin .boton:not(.boton-peligro) {
+    border: 1px solid var(--verde);
+    background-color: var(--verde);
+    color: var(--fondo);
+}
+
+.pagina-auth .boton:not(.boton-peligro):hover,
+.pagina-admin .boton:not(.boton-peligro):hover {
+    border-color: var(--blanco);
+    background-color: var(--blanco);
+    color: var(--fondo);
+    transform: translateY(-2px);
+}
+
+.pagina-auth .boton:not(.boton-peligro):disabled:hover,
+.pagina-admin .boton:not(.boton-peligro):disabled:hover {
+    border-color: var(--verde);
+    background-color: var(--verde);
+    transform: none;
 }
