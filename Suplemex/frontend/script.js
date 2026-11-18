@@ -122,7 +122,9 @@ function cambiarCantidad(nombre, sabor, presentacion, cantidad) {
 }
 
 function formatearPrecio(valor) {
-    return '$' + new Intl.NumberFormat('es-EC', { maximumFractionDigits: 2 }).format(valor);
+    // Muestra dos decimales solo cuando el precio los tiene (por ejemplo $79,80 en lugar de $79,8).
+    const decimales = Number.isInteger(Number(valor)) ? 0 : 2;
+    return '$' + new Intl.NumberFormat('es-EC', { minimumFractionDigits: decimales, maximumFractionDigits: 2 }).format(valor);
 }
 
 function crearBotonCantidad(texto, accion, nombre, sabor, presentacion, etiqueta) {
@@ -294,7 +296,10 @@ const productosCatalogo = {
         nombre: 'Red Rex Big Whey',
         categoria: 'PROTEÍNAS',
         descripcion: 'Proteína de suero concentrada, aislada e hidrolizada. Aporta 24 g de proteína por scoop y aminoácidos completos. Baja en calorías, carbohidratos y grasas, sin azúcar añadida; ayuda a promover la recuperación y el crecimiento muscular magro.',
-        imagen: 'images/red-rex-big-whey.png',
+        imagen: 'images/red-rex-big-whey.webp',
+        tituloTarjeta: 'Red Rex Big Whey Proteína',
+        descripcionCorta: '24 g de proteína por scoop para apoyar la recuperación y el crecimiento muscular magro.',
+        alt: 'Red Rex Big Whey 4.5 Lbs Vainilla',
         imagenAlejada: true,
         presentaciones: [
             { nombre: '4.5 Lbs', precio: 79.80 }
@@ -305,7 +310,10 @@ const productosCatalogo = {
         nombre: 'CBUM Essential Pre',
         categoria: 'PRE ENTRENAMIENTO',
         descripcion: 'Preentreno esencial de la serie CBUM, adecuado para principiantes y avanzados. Contiene dosis definidas de L-citrulina, beta alanina y cafeína para apoyar la energía, concentración, circulación, bombeo muscular, resistencia y reducir la fatiga. Modo de empleo: tomar 1 servida 30 minutos antes del entrenamiento físico.',
-        imagen: 'images/cbum-essential-pre.png',
+        imagen: 'images/cbum-essential-pre.webp',
+        tituloTarjeta: 'CBUM Essential Pre entreno',
+        descripcionCorta: 'Fórmula para energía, concentración, bombeo muscular y resistencia.',
+        alt: 'CBUM Essential Pre 30 servicios Champion Mentality',
         imagenAlejada: true,
         presentaciones: [
             { nombre: '30 servicios', precio: 36 }
@@ -316,13 +324,70 @@ const productosCatalogo = {
         nombre: 'Saxofit Colágeno',
         categoria: 'COLÁGENO',
         descripcion: 'Colágeno hidrolizado en polvo de rápida absorción, sin sabor ni componentes adicionales. Promueve la elasticidad de la piel, fortalece uñas y cabello y da soporte a huesos y articulaciones. Elaborado con materia prima española. Modo de empleo: tomar 1 servida completa una vez al día.',
-        imagen: 'images/saxofit-colageno.png',
+        imagen: 'images/saxofit-colageno.webp',
+        descripcionCorta: 'Colágeno hidrolizado sin sabor que apoya la elasticidad de la piel, uñas, cabello, huesos y articulaciones.',
+        alt: 'Saxofit Colágeno hidrolizado 300 g sin sabor',
         imagenAlejada: true,
         presentaciones: [
             { nombre: '300 g · 30 servicios', precio: 23 }
         ]
     }
 };
+
+// Crea las tarjetas de la portada a partir de `productosCatalogo`.
+// Para agregar un producto o cambiar un precio solo hay que editar el catálogo.
+function crearTarjetaProducto(slug, producto) {
+    const tarjeta = document.createElement('a');
+    tarjeta.className = 'tarjeta';
+    tarjeta.href = `producto.html?producto=${encodeURIComponent(slug)}`;
+    tarjeta.setAttribute('aria-label', `Ver detalles y presentaciones de ${producto.nombre}`);
+
+    const contenedorImagen = document.createElement('div');
+    contenedorImagen.className = 'producto-imagen';
+    const imagen = document.createElement('img');
+    imagen.loading = 'lazy';
+    imagen.decoding = 'async';
+    imagen.src = producto.imagen;
+    imagen.alt = producto.alt || producto.nombre;
+    if (producto.imagenAlejada) imagen.className = 'imagen-producto-alejada';
+    contenedorImagen.append(imagen);
+
+    const informacion = document.createElement('div');
+    informacion.className = 'producto-info';
+
+    const categoria = document.createElement('p');
+    categoria.className = 'producto-categoria';
+    categoria.textContent = producto.categoria;
+
+    const titulo = document.createElement('h3');
+    titulo.textContent = producto.tituloTarjeta || producto.nombre;
+
+    const descripcion = document.createElement('p');
+    descripcion.className = 'producto-descripcion';
+    descripcion.textContent = producto.descripcionCorta || producto.descripcion;
+
+    const pie = document.createElement('div');
+    pie.className = 'producto-pie';
+    const precio = document.createElement('p');
+    precio.className = 'precio';
+    const precioMinimo = Math.min(...producto.presentaciones.map(p => p.precio));
+    precio.textContent = `${producto.presentaciones.length > 1 ? 'Desde ' : ''}${formatearPrecio(precioMinimo)} USD`;
+    const boton = document.createElement('span');
+    boton.className = 'boton-comprar';
+    boton.textContent = 'Ver producto';
+    pie.append(precio, boton);
+
+    informacion.append(categoria, titulo, descripcion, pie);
+    tarjeta.append(contenedorImagen, informacion);
+    return tarjeta;
+}
+
+function mostrarCatalogo() {
+    const grid = document.getElementById('productos-grid');
+    if (!grid) return;
+    grid.replaceChildren(...Object.entries(productosCatalogo)
+        .map(([slug, producto]) => crearTarjetaProducto(slug, producto)));
+}
 
 function iniciarPaginaProducto() {
     const pagina = document.getElementById('pagina-producto');
@@ -342,7 +407,7 @@ function iniciarPaginaProducto() {
     document.getElementById('descripcion-detalle').textContent = producto.descripcion;
     const imagen = document.getElementById('imagen-detalle');
     imagen.src = producto.imagen;
-    imagen.alt = producto.nombre;
+    imagen.alt = producto.alt || producto.nombre;
     imagen.classList.toggle('imagen-producto-alejada', Boolean(producto.imagenAlejada));
 
     const opciones = document.getElementById('presentaciones-detalle');
@@ -389,6 +454,19 @@ function iniciarPaginaProducto() {
         botonAgregar.disabled = !seleccion || !saborElegido;
     }
 
+    // Si solo hay una presentación o un sabor, se selecciona automáticamente.
+    if (producto.presentaciones.length === 1) {
+        const unicaPresentacion = opciones.querySelector('input[type="radio"]');
+        if (unicaPresentacion) unicaPresentacion.checked = true;
+    }
+    if (producto.sabores && producto.sabores.length === 1) {
+        selectorSabor.value = producto.sabores[0];
+    }
+    actualizarSeleccion();
+
+    const metaDescripcion = document.querySelector('meta[name="description"]');
+    if (metaDescripcion) metaDescripcion.content = `${producto.nombre}: ${producto.descripcion}`.slice(0, 160);
+
     opciones.addEventListener('change', actualizarSeleccion);
     selectorSabor.addEventListener('change', actualizarSeleccion);
     botonAgregar.addEventListener('click', () => {
@@ -404,6 +482,7 @@ if (dialogoPedido && cerrarDialogoPedido) {
     cerrarDialogoPedido.addEventListener('click', () => dialogoPedido.close());
 }
 
+mostrarCatalogo();
 iniciarPaginaProducto();
 mostrarCarrito();
 actualizarContador();
