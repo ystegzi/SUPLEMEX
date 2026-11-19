@@ -14,7 +14,7 @@ type ProductoCatalogo = {
 const catalogo: ProductoCatalogo[] = [
     {
         slug: 'proteina',
-        nombre: 'Proteína Whey',
+        nombre: 'Proteína Whey Optimum Nutrition',
         categoria: 'Proteínas',
         descripcion: 'Ideal para complementar tu alimentación y apoyar la recuperación muscular.',
         presentaciones: [

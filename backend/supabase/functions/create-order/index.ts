@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 const products: Record<string, Record<string, { price: number; flavors: string[] }>> = {
-    'Proteína Whey': {
+    'Proteína Whey Optimum Nutrition': {
         '0,91 kg': { price: 80, flavors: ['Vainilla', 'Chocolate', 'Cookies and Cream'] },
         '2,27 kg': { price: 150, flavors: ['Vainilla', 'Chocolate', 'Cookies and Cream'] },
     },

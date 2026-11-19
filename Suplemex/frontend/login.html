@@ -65,6 +65,7 @@
                     <nav class="auth-ajustes-nav" aria-label="Secciones de configuración">
                         <p class="auth-nav-titulo">CONFIGURACIÓN</p>
                         <a href="#auth-perfil" class="auth-nav-enlace auth-nav-activo">Perfil</a>
+                        <a href="#auth-pedidos" class="auth-nav-enlace">Mis pedidos</a>
                         <a href="#auth-correo-seccion" class="auth-nav-enlace">Correo electrónico</a>
                         <a href="#auth-seguridad" class="auth-nav-enlace">Seguridad</a>
                         <a href="#auth-sesiones" class="auth-nav-enlace">Sesión</a>
@@ -87,9 +88,22 @@
                             </form>
                         </section>
 
-                        <section id="auth-correo-seccion" class="auth-ajuste-seccion" aria-labelledby="auth-correo-titulo">
+                        <section id="auth-pedidos" class="auth-ajuste-seccion" aria-labelledby="auth-pedidos-titulo">
                             <div class="auth-seccion-encabezado">
                                 <span class="auth-seccion-icono" aria-hidden="true">02</span>
+                                <div>
+                                    <h2 id="auth-pedidos-titulo">Mis pedidos</h2>
+                                    <p>Revisa tus compras y en qué estado está cada una.</p>
+                                </div>
+                            </div>
+                            <p id="auth-pedidos-estado" class="auth-ayuda" role="status">Cargando tus pedidos…</p>
+                            <ul id="auth-pedidos-lista" class="pedidos-lista" hidden></ul>
+                            <button id="auth-pedidos-actualizar" class="boton boton-secundario auth-accion" type="button">Actualizar pedidos</button>
+                        </section>
+
+                        <section id="auth-correo-seccion" class="auth-ajuste-seccion" aria-labelledby="auth-correo-titulo">
+                            <div class="auth-seccion-encabezado">
+                                <span class="auth-seccion-icono" aria-hidden="true">03</span>
                                 <div>
                                     <h2 id="auth-correo-titulo">Correo electrónico</h2>
                                     <p>El correo se usa para iniciar sesión y recibir avisos de seguridad.</p>
@@ -107,7 +121,7 @@
 
                         <section id="auth-seguridad" class="auth-ajuste-seccion" aria-labelledby="auth-seguridad-titulo">
                             <div class="auth-seccion-encabezado">
-                                <span class="auth-seccion-icono" aria-hidden="true">03</span>
+                                <span class="auth-seccion-icono" aria-hidden="true">04</span>
                                 <div>
                                     <h2 id="auth-seguridad-titulo">Seguridad</h2>
                                     <p>Usa una contraseña segura de al menos 8 caracteres.</p>
@@ -124,7 +138,7 @@
 
                         <section id="auth-sesiones" class="auth-ajuste-seccion auth-ajuste-sesion" aria-labelledby="auth-sesion-titulo">
                             <div class="auth-seccion-encabezado">
-                                <span class="auth-seccion-icono" aria-hidden="true">04</span>
+                                <span class="auth-seccion-icono" aria-hidden="true">05</span>
                                 <div>
                                     <h2 id="auth-sesion-titulo">Tu sesión</h2>
                                     <p>Cierra el acceso a tu cuenta en este dispositivo.</p>

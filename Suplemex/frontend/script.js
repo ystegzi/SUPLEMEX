@@ -261,7 +261,7 @@ if (listaCarrito) {
 
 const productosCatalogo = {
     proteina: {
-        nombre: 'Proteína Whey',
+        nombre: 'Proteína Whey Optimum Nutrition',
         categoria: 'PROTEÍNAS',
         descripcion: 'Ideal para complementar tu alimentación y apoyar la recuperación muscular.',
         imagen: 'https://www.optimumnutrition.com/cdn/shop/files/US_GSW_5LB_EXTMILKCHOC_Main_Image.png?v=1777475681&width=2500',
@@ -382,11 +382,74 @@ function crearTarjetaProducto(slug, producto) {
     return tarjeta;
 }
 
+// Quita tildes y mayúsculas para que "proteina" encuentre "Proteína".
+function normalizarTexto(texto) {
+    return String(texto).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+}
+
 function mostrarCatalogo() {
     const grid = document.getElementById('productos-grid');
     if (!grid) return;
-    grid.replaceChildren(...Object.entries(productosCatalogo)
-        .map(([slug, producto]) => crearTarjetaProducto(slug, producto)));
+
+    const tarjetas = Object.entries(productosCatalogo).map(([slug, producto]) => ({
+        producto,
+        elemento: crearTarjetaProducto(slug, producto),
+        textoBusqueda: normalizarTexto([
+            producto.nombre,
+            producto.tituloTarjeta,
+            producto.categoria,
+            producto.descripcion,
+            ...(producto.sabores || []),
+        ].filter(Boolean).join(' ')),
+    }));
+    grid.replaceChildren(...tarjetas.map(t => t.elemento));
+
+    const buscador = document.getElementById('buscar-producto');
+    const filtros = document.getElementById('filtros-categoria');
+    const vacio = document.getElementById('catalogo-vacio');
+    if (!buscador || !filtros) return;
+
+    let categoriaActiva = '';
+
+    function aplicarFiltros() {
+        const busqueda = normalizarTexto(buscador.value);
+        let visibles = 0;
+        tarjetas.forEach(({ producto, elemento, textoBusqueda }) => {
+            const coincide = (!categoriaActiva || producto.categoria === categoriaActiva)
+                && (!busqueda || textoBusqueda.includes(busqueda));
+            elemento.hidden = !coincide;
+            if (coincide) visibles++;
+        });
+        if (vacio) vacio.hidden = visibles > 0;
+    }
+
+    const categorias = [...new Set(Object.values(productosCatalogo).map(p => p.categoria))];
+    const botones = ['', ...categorias].map(categoria => {
+        const boton = document.createElement('button');
+        boton.type = 'button';
+        boton.className = 'filtro-categoria';
+        boton.textContent = categoria ? categoria.charAt(0) + categoria.slice(1).toLowerCase() : 'Todos';
+        boton.setAttribute('aria-pressed', String(categoria === categoriaActiva));
+        boton.addEventListener('click', () => {
+            categoriaActiva = categoria;
+            botones.forEach(b => b.setAttribute('aria-pressed', String(b === boton)));
+            aplicarFiltros();
+        });
+        return boton;
+    });
+    filtros.replaceChildren(...botones);
+
+    const limpiar = document.getElementById('limpiar-busqueda');
+    buscador.addEventListener('input', () => {
+        if (limpiar) limpiar.hidden = !buscador.value;
+        aplicarFiltros();
+    });
+    limpiar?.addEventListener('click', () => {
+        buscador.value = '';
+        limpiar.hidden = true;
+        aplicarFiltros();
+        buscador.focus();
+    });
 }
 
 function iniciarPaginaProducto() {

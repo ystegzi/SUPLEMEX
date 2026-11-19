@@ -79,6 +79,23 @@
                 <p>Suplementos seleccionados para potenciar tu rendimiento.</p>
             </div>
 
+            <div class="catalogo-filtros">
+                <div class="buscador">
+                    <svg class="buscador-icono" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                        <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M20 20l-4.2-4.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input id="buscar-producto" class="buscar-producto" type="search" placeholder="Buscar por nombre, categoría o sabor" aria-label="Buscar producto" autocomplete="off" maxlength="60">
+                    <button id="limpiar-busqueda" class="buscador-limpiar" type="button" aria-label="Borrar búsqueda" hidden>
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                            <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="filtros-categoria" class="filtros-categoria" role="group" aria-label="Filtrar por categoría"></div>
+            </div>
+            <p id="catalogo-vacio" class="catalogo-vacio" role="status" hidden>No encontramos productos con esa búsqueda.</p>
+
             <div id="productos-grid" class="productos-grid">
                 <!-- Las tarjetas se generan desde productosCatalogo en script.js -->
                 <noscript>

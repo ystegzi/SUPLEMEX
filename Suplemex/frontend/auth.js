@@ -126,6 +126,95 @@ function actualizarModo() {
     document.getElementById('auth-email-label').hidden = esRecuperacion;
 }
 
+// --- Mis pedidos ---
+// Supabase solo devuelve los pedidos de la cuenta que inició sesión
+// (regla de la migración 20261119000000_customer_orders_read.sql).
+const ESTADOS_PEDIDO = {
+    pending: 'Pendiente',
+    confirmed: 'Confirmado',
+    shipped: 'Enviado',
+    cancelled: 'Cancelado',
+};
+let usuarioPedidos = null;
+let solicitudPedidos = 0;
+
+function formatearDinero(valor) {
+    return `${Number(valor).toFixed(2)} USD`;
+}
+
+function crearPedido(pedido) {
+    const item = document.createElement('li');
+    item.className = 'pedido';
+
+    const encabezado = document.createElement('div');
+    encabezado.className = 'pedido-encabezado';
+    const numero = document.createElement('strong');
+    numero.textContent = pedido.order_number;
+    const fecha = document.createElement('span');
+    fecha.className = 'pedido-fecha';
+    fecha.textContent = new Date(pedido.created_at).toLocaleDateString('es', {
+        day: 'numeric', month: 'long', year: 'numeric',
+    });
+    const estado = document.createElement('span');
+    estado.className = `pedido-estado pedido-estado-${pedido.status}`;
+    estado.textContent = ESTADOS_PEDIDO[pedido.status] || pedido.status;
+    encabezado.append(numero, fecha, estado);
+
+    const productos = document.createElement('ul');
+    productos.className = 'pedido-productos';
+    (pedido.order_items || []).forEach(linea => {
+        const producto = document.createElement('li');
+        const detalle = [linea.presentation, linea.flavor].filter(Boolean).join(' · ');
+        producto.textContent = `${linea.quantity} × ${linea.product_name}${detalle ? ` (${detalle})` : ''}`;
+        const precio = document.createElement('span');
+        precio.textContent = formatearDinero(linea.line_total);
+        producto.append(precio);
+        productos.append(producto);
+    });
+
+    const total = document.createElement('p');
+    total.className = 'pedido-total';
+    total.textContent = `Total: ${formatearDinero(pedido.total)}`;
+
+    item.append(encabezado, productos, total);
+    return item;
+}
+
+async function cargarMisPedidos() {
+    const estado = document.getElementById('auth-pedidos-estado');
+    const lista = document.getElementById('auth-pedidos-lista');
+    const boton = document.getElementById('auth-pedidos-actualizar');
+    if (!cliente || !estado || !lista) return;
+
+    const solicitud = ++solicitudPedidos;
+    estado.hidden = false;
+    estado.textContent = 'Cargando tus pedidos…';
+    if (boton) boton.disabled = true;
+    try {
+        const { data, error } = await cliente
+            .from('orders')
+            .select('id, order_number, status, total, created_at, order_items(product_name, presentation, flavor, quantity, line_total)')
+            .order('created_at', { ascending: false })
+            .limit(20);
+        if (solicitud !== solicitudPedidos) return;
+        if (error) throw error;
+
+        lista.replaceChildren(...data.map(crearPedido));
+        lista.hidden = data.length === 0;
+        estado.hidden = data.length > 0;
+        estado.textContent = 'Todavía no tienes pedidos. Cuando compres con tu sesión iniciada, aparecerán aquí.';
+    } catch (error) {
+        if (solicitud !== solicitudPedidos) return;
+        console.error('No se pudieron cargar los pedidos:', error);
+        lista.hidden = true;
+        estado.textContent = 'No se pudieron cargar tus pedidos. Intenta de nuevo en unos minutos.';
+    } finally {
+        if (boton && solicitud === solicitudPedidos) boton.disabled = false;
+    }
+}
+
+document.getElementById('auth-pedidos-actualizar')?.addEventListener('click', cargarMisPedidos);
+
 function actualizarSesion(usuario) {
     const autenticado = Boolean(usuario);
     const inicioSesion = autenticado && !sesionAnterior;
@@ -149,6 +238,10 @@ function actualizarSesion(usuario) {
     document.getElementById('auth-estado-cuenta').classList.toggle('auth-estado-verificado', Boolean(usuario?.email_confirmed_at));
     document.getElementById('auth-correo-actual').textContent = correo;
     if (document.activeElement !== campoNombre) campoNombre.value = nombre;
+    if (usuario?.id !== usuarioPedidos) {
+        usuarioPedidos = usuario?.id || null;
+        if (usuarioPedidos) cargarMisPedidos();
+    }
     if (autenticado) {
         titulo.textContent = 'Configuración';
         descripcion.textContent = 'Administra tu perfil, acceso y seguridad desde un solo lugar.';
