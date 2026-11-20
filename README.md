@@ -50,6 +50,12 @@ Suplemex/
 
 Si cambias archivos de `Suplemex/frontend/chatbot*`, vuelve a compilar el widget con `npm.cmd run build:chatbot`.
 
+## Publicación en GitHub Pages
+
+La tienda está publicada en **https://ystegzi.github.io/SUPLEMEX/**.
+
+El workflow `.github/workflows/pages.yml` publica la carpeta `Suplemex/frontend` cada vez que se sube un cambio a `main`. GitHub Pages solo sirve archivos estáticos (no ejecuta Node), así que el chatbot usa la función `chatbot` de Supabase, y las cuentas y los pedidos funcionan igual con Supabase.
+
 ## API
 
 | Método | Ruta | Descripción |
