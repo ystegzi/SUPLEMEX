@@ -58,6 +58,11 @@
                         <p class="subtitulo">VENTAS</p>
                         <h2 id="admin-pedidos-titulo">Pedidos</h2>
                     </div>
+                    <div class="admin-controles">
+                    <label class="admin-busqueda">
+                        <span class="sr-only">Buscar pedido por código</span>
+                        <input id="admin-buscar-pedidos" type="search" placeholder="Buscar por código…" autocomplete="off">
+                    </label>
                     <label class="admin-filtro">
                         <span class="sr-only">Filtrar pedidos</span>
                         <select id="admin-filtro-pedidos">
@@ -68,6 +73,7 @@
                             <option value="cancelled">Cancelados</option>
                         </select>
                     </label>
+                    </div>
                 </div>
                 <div class="admin-tabla-contenedor">
                     <table class="admin-tabla">

@@ -6,6 +6,7 @@ const botonActualizar = document.getElementById('admin-actualizar');
 const botonCerrarSesion = document.getElementById('admin-cerrar-sesion');
 const filtroPedidos = document.getElementById('admin-filtro-pedidos');
 const busquedaCuentas = document.getElementById('admin-buscar-cuentas');
+const busquedaPedidos = document.getElementById('admin-buscar-pedidos');
 const estadoEtiquetas = {
     pending: 'Pendiente',
     confirmed: 'Confirmado',
@@ -41,7 +42,10 @@ function formatearFecha(valor) {
 function renderizarPedidos() {
     const cuerpo = document.getElementById('admin-pedidos');
     const estadoSeleccionado = filtroPedidos.value;
-    const visibles = pedidos.filter(pedido => estadoSeleccionado === 'all' || pedido.status === estadoSeleccionado);
+    const codigoBuscado = busquedaPedidos.value.trim().toLowerCase();
+    const visibles = pedidos.filter(pedido =>
+        (estadoSeleccionado === 'all' || pedido.status === estadoSeleccionado)
+        && String(pedido.order_number || '').toLowerCase().includes(codigoBuscado));
     cuerpo.replaceChildren();
     document.getElementById('admin-pedidos-vacios').hidden = visibles.length > 0;
 
@@ -289,6 +293,7 @@ async function iniciarPanel() {
 }
 
 filtroPedidos.addEventListener('change', renderizarPedidos);
+busquedaPedidos.addEventListener('input', renderizarPedidos);
 busquedaCuentas.addEventListener('input', renderizarCuentas);
 botonActualizar.addEventListener('click', cargarDatos);
 botonCerrarSesion.addEventListener('click', async () => {

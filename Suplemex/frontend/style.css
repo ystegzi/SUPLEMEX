@@ -2375,6 +2375,7 @@ body:has(#chatbot-root) {
         padding: 17px 13px;
     }
 
+    .admin-controles,
     .admin-filtro,
     .admin-busqueda {
         width: 100%;
@@ -2961,6 +2962,13 @@ body:has(#chatbot-root) {
 .admin-seccion-cabecera h2 {
     margin: 0;
     font-size: 25px;
+}
+
+.admin-controles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .admin-filtro {
